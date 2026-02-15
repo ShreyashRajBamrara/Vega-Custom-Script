@@ -1,0 +1,5 @@
+PRINT Game Started
+MOVE Player FORWARD 10
+WAIT 1
+MOVE Player BACKWARD -20
+PRINT Script Ended

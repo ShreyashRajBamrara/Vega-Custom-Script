@@ -1,20 +1,23 @@
-public class MoveCommand : ICommand
+using UnityEditor;
+
+public class RotateCommand : ICommand
 {
     private string objectName;
     private float value;
     private string direction;
     private ExecutionMode mode;
 
-    public MoveCommand(string obj,string dir,float val,ExecutionMode executionMode)
+    public RotateCommand(string obj,string dir,float val,ExecutionMode executionMode)
     {
         objectName = obj;
         direction=dir;
         value = val;
-        mode =executionMode;
+        mode = executionMode;
+        
     }
 
     public void Execute(GameAPI api)
     {
-        api.Move(objectName,direction,value,mode);
+        api.Rotate(objectName,direction,value,mode);
     }
 }
