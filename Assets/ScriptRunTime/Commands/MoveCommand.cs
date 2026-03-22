@@ -5,16 +5,24 @@ public class MoveCommand : ICommand
     private string direction;
     private ExecutionMode mode;
 
-    public MoveCommand(string obj,string dir,float val,ExecutionMode executionMode)
+    public MoveCommand(string obj, string dir, float val, ExecutionMode executionMode)
     {
         objectName = obj;
-        direction=dir;
+        direction = dir;
         value = val;
-        mode =executionMode;
+        mode = executionMode;
     }
 
     public void Execute(GameAPI api)
     {
-        api.Move(objectName,direction,value,mode);
+        api.Move(objectName, direction, value, mode);
+    }
+
+    public MoveCommand(string obj, float val)
+    {
+        this.objectName = obj;
+        this.direction = "FORWARD";
+        this.value = val;
+        this.mode = ExecutionMode.Instant;
     }
 }
