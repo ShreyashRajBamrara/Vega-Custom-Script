@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Lexer
 {
     private readonly string source;
+
     private readonly List<Token> tokens = new List<Token>();
 
     private int start = 0;
@@ -12,11 +13,16 @@ public class Lexer
 
     // Keyword mapping
     private static readonly Dictionary<string, TokenType> keywords =
-        new Dictionary<string, TokenType>()
-        {
-            { "move", TokenType.MOVE },
-            { "print", TokenType.PRINT }
-        };
+    new Dictionary<string, TokenType>()
+{
+    { "move", TokenType.MOVE },
+    { "print", TokenType.PRINT },
+    { "repeat", TokenType.REPEAT },
+    { "end", TokenType.END },
+    { "rotate", TokenType.ROTATE },
+    { "wait", TokenType.WAIT },
+    { "loop", TokenType.LOOP }
+};
 
     public Lexer(string source)
     {
@@ -122,10 +128,11 @@ public class Lexer
             Advance();
 
         string text = source.Substring(start, current - start);
+        string lower = text.ToLower().Trim();
 
-        if (keywords.ContainsKey(text))
+        if (keywords.ContainsKey(lower))
         {
-            AddToken(keywords[text]);
+            AddToken(keywords[lower]);
         }
         else
         {

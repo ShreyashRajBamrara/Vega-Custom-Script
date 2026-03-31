@@ -1,5 +1,5 @@
 using UnityEditor;
-
+using UnityEngine;
 public class RotateCommand : ICommand
 {
     private string objectName;
@@ -18,6 +18,7 @@ public class RotateCommand : ICommand
 
     public void Execute(GameAPI api)
     {
+        Debug.Log("Executing RotateCommand");
         api.Rotate(objectName,direction,value,mode);
     }
 }

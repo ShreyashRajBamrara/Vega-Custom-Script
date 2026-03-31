@@ -1,4 +1,4 @@
-move player forward 5
-move player backward 3
-rotate player y 45
+move Player forward 5
+move Player backward 3
+rotate Player y 45
 print hello

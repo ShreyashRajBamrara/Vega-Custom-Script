@@ -1,0 +1,4 @@
+loop
+    move yy left 0.3
+    wait 0.005
+end

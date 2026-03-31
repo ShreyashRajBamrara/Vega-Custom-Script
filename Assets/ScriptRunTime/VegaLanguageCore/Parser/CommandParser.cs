@@ -50,6 +50,62 @@ public class CommandParser
             return new PrintCommand(msg.Lexeme);
         }
 
+        if (Match(TokenType.REPEAT))
+        {
+            Token number = Consume(TokenType.NUMBER, "Expected repeat count");
+            int count = (int)(double)number.Literal;
+
+            List<ICommand> innerCommands = new List<ICommand>();
+
+            while (!Check(TokenType.END) && !IsAtEnd())
+            {
+                ICommand cmd = ParseCommand();
+                if (cmd != null)
+                    innerCommands.Add(cmd);
+            }
+
+            Consume(TokenType.END, "Expected 'end' after repeat block");
+
+            return new RepeatCommand(count, innerCommands);
+        }
+
+        if (Match(TokenType.ROTATE))
+        {
+            Token entity = Consume(TokenType.IDENTIFIER, "Expected entity name");
+            Token direction = Consume(TokenType.IDENTIFIER, "Expected direction");
+            Token value = Consume(TokenType.NUMBER, "Expected number");
+
+            float v = (float)(double)value.Literal;
+
+            Debug.Log($"Parsed ROTATE: {entity.Lexeme} {direction.Lexeme} {v}");
+
+            return new RotateCommand(entity.Lexeme, direction.Lexeme, v, ExecutionMode.Instant);
+        }
+
+        if (Match(TokenType.WAIT))
+        {
+            Token time = Consume(TokenType.NUMBER, "Expected wait time");
+            float t = (float)(double)time.Literal;
+
+            return new WaitCommand(t);
+        }
+
+        if (Match(TokenType.LOOP))
+        {
+            List<ICommand> innerCommands = new List<ICommand>();
+
+            while (!Check(TokenType.END) && !IsAtEnd())
+            {
+                ICommand cmd = ParseCommand();
+                if (cmd != null)
+                    innerCommands.Add(cmd);
+            }
+
+            Consume(TokenType.END, "Expected 'end' after loop block");
+
+            return new LoopCommand(innerCommands);
+        }
+
         Advance();
         return null;
     }

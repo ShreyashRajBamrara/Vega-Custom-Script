@@ -1,0 +1,4 @@
+loop
+    move rr right 0.4
+    wait 0.005
+end

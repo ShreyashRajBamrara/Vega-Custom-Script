@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class MoveCommand : ICommand
 {
     private string objectName;
@@ -15,6 +17,7 @@ public class MoveCommand : ICommand
 
     public void Execute(GameAPI api)
     {
+        Debug.Log("Executing MoveCommand: " + objectName);
         api.Move(objectName, direction, value, mode);
     }
 

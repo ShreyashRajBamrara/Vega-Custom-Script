@@ -22,6 +22,7 @@ public class GameAPI
 
     public void Move(string objectName, string direction, float value, ExecutionMode executionMode)
     {
+        Debug.Log("GameAPI Move called");
         GameObject obj = GameObject.Find(objectName);
 
         if (obj == null)
@@ -37,6 +38,7 @@ public class GameAPI
 
         if (executionMode == ExecutionMode.Instant)
         {
+            Debug.Log("MoveInstant called");
             movementAPI.MoveInstant(obj, dir, value);
         }
         else
@@ -45,8 +47,10 @@ public class GameAPI
         }
     }
 
-    public void Rotate(string objectName, string axis, float angle, ExecutionMode executionMode)
+    public void Rotate(string objectName, string direction, float value, ExecutionMode mode)
     {
+        Debug.Log("GameAPI Rotate called");
+
         GameObject obj = GameObject.Find(objectName);
 
         if (obj == null)
@@ -55,49 +59,46 @@ public class GameAPI
             return;
         }
 
-        Vector3 axisVector = GetAxis(axis);
+        Vector3 axis = GetAxis(direction);
 
-        if (axisVector == Vector3.zero)
-            return;
-
-        if (executionMode == ExecutionMode.Instant)
+        if (mode == ExecutionMode.Instant)
         {
-            rotationAPI.RotateInstant(obj, axisVector, angle);
+            rotationAPI.RotateInstant(obj, axis, value);
         }
         else
         {
-            rotationAPI.RotateSmooth(obj, axisVector, angle);
+            rotationAPI.RotateSmooth(obj, axis, value);
         }
     }
 
-    private Vector3 GetDirection(string direction)
-    {
-        switch (direction.ToUpper())
-        {
-            case "FORWARD": return Vector3.forward;
-            case "BACKWARD": return Vector3.back;
-            case "LEFT": return Vector3.left;
-            case "RIGHT": return Vector3.right;
-            case "UP": return Vector3.up;
-            case "DOWN": return Vector3.down;
+    private Vector3 GetDirection(string dir)
+{
+    dir = dir.ToLower();
 
-            default:
-                Debug.LogError("Invalid direction: " + direction);
-                return Vector3.zero;
-        }
+    switch (dir)
+    {
+        case "forward": return Vector3.forward;
+        case "backward": return Vector3.back;
+        case "left": return Vector3.left;
+        case "right": return Vector3.right;
+        case "up": return Vector3.up;
+        case "down": return Vector3.down;
+        default:
+            Debug.LogError("Invalid direction: " + dir);
+            return Vector3.zero;
     }
+}
 
-    private Vector3 GetAxis(string axis)
+    private Vector3 GetAxis(string dir)
     {
-        switch (axis.ToUpper())
-        {
-            case "X": return Vector3.right;
-            case "Y": return Vector3.up;
-            case "Z": return Vector3.forward;
+        dir = dir.ToLower();
 
-            default:
-                Debug.LogError("Invalid axis: " + axis);
-                return Vector3.zero;
+        switch (dir)
+        {
+            case "x": return Vector3.right;
+            case "y": return Vector3.up;
+            case "z": return Vector3.forward;
+            default: return Vector3.up;
         }
     }
 }

@@ -11,5 +11,10 @@ public enum TokenType
     STAR,
     SLASH,
     EQUALS,
+    REPEAT,
+    END,
+    ROTATE,
+    WAIT,
+    LOOP,
     EOF
 }
