@@ -38,7 +38,7 @@ public class GameAPI
 
         if (executionMode == ExecutionMode.Instant)
         {
-            Debug.Log("MoveInstant called");
+
             movementAPI.MoveInstant(obj, dir, value);
         }
         else

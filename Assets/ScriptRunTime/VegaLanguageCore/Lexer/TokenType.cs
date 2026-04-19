@@ -16,5 +16,6 @@ public enum TokenType
     ROTATE,
     WAIT,
     LOOP,
+    IF,
     EOF
 }

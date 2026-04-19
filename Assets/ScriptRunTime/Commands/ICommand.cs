@@ -1,4 +1,6 @@
+using System.Collections;
+
 public interface ICommand
 {
-    void Execute(GameAPI api);
+    IEnumerator Execute(GameAPI api);
 }

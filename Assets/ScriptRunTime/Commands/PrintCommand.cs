@@ -1,3 +1,6 @@
+using System.Collections;
+using UnityEngine;
+
 public class PrintCommand : ICommand
 {
     private string message;
@@ -7,8 +10,9 @@ public class PrintCommand : ICommand
         message = msg;
     }
 
-    public void Execute(GameAPI api)
+    public IEnumerator Execute(GameAPI api)
     {
         api.Print(message);
+        yield return null;
     }
 }

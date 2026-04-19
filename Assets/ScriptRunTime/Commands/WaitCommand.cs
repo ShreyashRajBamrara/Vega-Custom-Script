@@ -10,12 +10,7 @@ public class WaitCommand : ICommand
         time = t;
     }
 
-    public void Execute(GameAPI api)
-    {
-        CoroutineRunner.Instance.StartCoroutine(WaitRoutine());
-    }
-
-    private IEnumerator WaitRoutine()
+    public IEnumerator Execute(GameAPI api)
     {
         yield return new WaitForSeconds(time);
     }

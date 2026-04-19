@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class RepeatCommand : ICommand
 {
@@ -13,21 +12,14 @@ public class RepeatCommand : ICommand
         this.commands = commands;
     }
 
-    public void Execute(GameAPI api)
-    {
-        CoroutineRunner.Instance.StartCoroutine(RunLoop(api));
-    }
-
-    private IEnumerator RunLoop(GameAPI api)
+    public IEnumerator Execute(GameAPI api)
     {
         for (int i = 0; i < count; i++)
         {
             foreach (var cmd in commands)
             {
-                cmd.Execute(api);
+                yield return cmd.Execute(api);
             }
-
-            yield return new WaitForSeconds(0.2f);
         }
     }
 }

@@ -71,10 +71,6 @@ public class Lexer
                 AddToken(TokenType.SLASH);
                 break;
 
-            case '=':
-                AddToken(TokenType.EQUALS);
-                break;
-
             case ' ':
             case '\r':
             case '\t':
@@ -100,6 +96,14 @@ public class Lexer
                 }
                 break;
         }
+    }
+    private bool Match(char expected)
+    {
+        if (IsAtEnd()) return false;
+        if (source[current] != expected) return false;
+
+        current++;
+        return true;
     }
 
     private void ScanNumber()

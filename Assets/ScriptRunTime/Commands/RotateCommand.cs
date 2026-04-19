@@ -1,5 +1,6 @@
-using UnityEditor;
+using System.Collections;
 using UnityEngine;
+
 public class RotateCommand : ICommand
 {
     private string objectName;
@@ -7,18 +8,19 @@ public class RotateCommand : ICommand
     private string direction;
     private ExecutionMode mode;
 
-    public RotateCommand(string obj,string dir,float val,ExecutionMode executionMode)
+    public RotateCommand(string obj, string dir, float val, ExecutionMode executionMode)
     {
         objectName = obj;
-        direction=dir;
+        direction = dir;
         value = val;
         mode = executionMode;
-        
     }
 
-    public void Execute(GameAPI api)
+    public IEnumerator Execute(GameAPI api)
     {
         Debug.Log("Executing RotateCommand");
-        api.Rotate(objectName,direction,value,mode);
+        api.Rotate(objectName, direction, value, mode);
+
+        yield return null;
     }
 }

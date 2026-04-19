@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
 public class CommandParser
 {
     private List<Token> tokens;
@@ -106,10 +105,17 @@ public class CommandParser
             return new LoopCommand(innerCommands);
         }
 
+       
+
         Advance();
+        Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);
         return null;
     }
-
+    
+    private Token Previous()
+    {
+        return tokens[current - 1];
+    }
     private bool Match(TokenType type)
     {
         if (Check(type))

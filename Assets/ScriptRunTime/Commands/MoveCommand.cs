@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class MoveCommand : ICommand
 {
@@ -15,17 +16,9 @@ public class MoveCommand : ICommand
         mode = executionMode;
     }
 
-    public void Execute(GameAPI api)
+    public IEnumerator Execute(GameAPI api)
     {
-        Debug.Log("Executing MoveCommand: " + objectName);
         api.Move(objectName, direction, value, mode);
-    }
-
-    public MoveCommand(string obj, float val)
-    {
-        this.objectName = obj;
-        this.direction = "FORWARD";
-        this.value = val;
-        this.mode = ExecutionMode.Instant;
+        yield return null;
     }
 }
