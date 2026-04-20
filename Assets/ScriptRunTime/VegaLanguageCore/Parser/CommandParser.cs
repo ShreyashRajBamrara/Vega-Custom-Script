@@ -35,7 +35,7 @@ public class CommandParser
 
             float v = (float)(double)value.Literal;
 
-            Debug.Log($"Parsed MOVE: {entity.Lexeme} {direction.Lexeme} {v}");
+            // Debug.Log($"Parsed MOVE: {entity.Lexeme} {direction.Lexeme} {v}");
 
             return new MoveCommand(entity.Lexeme, direction.Lexeme, v, ExecutionMode.Instant);
         }
@@ -44,7 +44,7 @@ public class CommandParser
         {
             Token msg = Consume(TokenType.IDENTIFIER, "Expected message");
 
-            Debug.Log($"Parsed PRINT: {msg.Lexeme}");
+            // Debug.Log($"Parsed PRINT: {msg.Lexeme}");
 
             return new PrintCommand(msg.Lexeme);
         }
@@ -105,13 +105,27 @@ public class CommandParser
             return new LoopCommand(innerCommands);
         }
 
-       
+        if (Match(TokenType.SPAWN))
+        {
+            Token prefab = Consume(TokenType.IDENTIFIER, "Expected prefab name");
 
-        Advance();
+            Consume(TokenType.AT, "Expected 'at'");
+
+            Token location = Consume(TokenType.IDENTIFIER, "Expected location name");
+
+            Debug.Log($"Parsed SPAWN: {prefab.Lexeme} at {location.Lexeme}");
+
+            return new SpawnCommand(prefab.Lexeme, location.Lexeme);
+        }
+
+
+
         Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);
+        Advance();
         return null;
     }
-    
+
+
     private Token Previous()
     {
         return tokens[current - 1];

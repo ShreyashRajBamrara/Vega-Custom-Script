@@ -12,9 +12,9 @@ public class MovementAPI
 
     public void MoveInstant(GameObject obj, Vector3 direction, float value)
     {
-        Debug.Log("MoveInstant called");
+        // Debug.Log("MoveInstant called");
         obj.transform.position += direction * value;
-        Debug.Log("New Position: " + obj.transform.position);
+        // Debug.Log("New Position: " + obj.transform.position);
     }
 
     public void MoveSmooth(GameObject obj, Vector3 direction, float value)

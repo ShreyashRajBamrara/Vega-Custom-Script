@@ -21,7 +21,9 @@ public class Lexer
     { "end", TokenType.END },
     { "rotate", TokenType.ROTATE },
     { "wait", TokenType.WAIT },
-    { "loop", TokenType.LOOP }
+    { "loop", TokenType.LOOP },
+    { "spawn", TokenType.SPAWN },
+    { "at", TokenType.AT }  
 };
 
     public Lexer(string source)

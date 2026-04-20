@@ -72,22 +72,22 @@ public class GameAPI
     }
 
     private Vector3 GetDirection(string dir)
-{
-    dir = dir.ToLower();
-
-    switch (dir)
     {
-        case "forward": return Vector3.forward;
-        case "backward": return Vector3.back;
-        case "left": return Vector3.left;
-        case "right": return Vector3.right;
-        case "up": return Vector3.up;
-        case "down": return Vector3.down;
-        default:
-            Debug.LogError("Invalid direction: " + dir);
-            return Vector3.zero;
+        dir = dir.ToLower();
+
+        switch (dir)
+        {
+            case "forward": return Vector3.forward;
+            case "backward": return Vector3.back;
+            case "left": return Vector3.left;
+            case "right": return Vector3.right;
+            case "up": return Vector3.up;
+            case "down": return Vector3.down;
+            default:
+                Debug.LogError("Invalid direction: " + dir);
+                return Vector3.zero;
+        }
     }
-}
 
     private Vector3 GetAxis(string dir)
     {
@@ -100,5 +100,36 @@ public class GameAPI
             case "z": return Vector3.forward;
             default: return Vector3.up;
         }
+    }
+
+    public void Spawn(string prefabName, string locationName)
+    {
+        GameObject prefab = null;
+        GameObject location = null;
+
+        GameObject[] allObjects = Resources.FindObjectsOfTypeAll<GameObject>();
+
+        foreach (var obj in allObjects)
+        {
+            if (obj.name == prefabName)
+                prefab = obj;
+
+            if (obj.name == locationName)
+                location = obj;
+        }
+
+        if (prefab == null)
+        {
+            Debug.LogError("Prefab not found: " + prefabName);
+            return;
+        }
+
+        if (location == null)
+        {
+            Debug.LogError("Location not found: " + locationName);
+            return;
+        }
+
+        GameObject.Instantiate(prefab, location.transform.position, location.transform.rotation);
     }
 }
