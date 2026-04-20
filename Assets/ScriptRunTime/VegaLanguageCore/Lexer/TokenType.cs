@@ -17,5 +17,7 @@ public enum TokenType
     WAIT,
     LOOP,
     IF,
+    SPAWN,
+    AT,
     EOF
 }
