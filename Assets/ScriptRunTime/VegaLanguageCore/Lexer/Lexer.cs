@@ -23,7 +23,8 @@ public class Lexer
     { "wait", TokenType.WAIT },
     { "loop", TokenType.LOOP },
     { "spawn", TokenType.SPAWN },
-    { "at", TokenType.AT }  
+    { "at", TokenType.AT },
+    { "if", TokenType.IF }
 };
 
     public Lexer(string source)

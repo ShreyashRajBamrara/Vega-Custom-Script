@@ -76,7 +76,7 @@ public class CommandParser
 
             float v = (float)(double)value.Literal;
 
-            Debug.Log($"Parsed ROTATE: {entity.Lexeme} {direction.Lexeme} {v}");
+            // Debug.Log($"Parsed ROTATE: {entity.Lexeme} {direction.Lexeme} {v}");
 
             return new RotateCommand(entity.Lexeme, direction.Lexeme, v, ExecutionMode.Instant);
         }
@@ -118,7 +118,33 @@ public class CommandParser
             return new SpawnCommand(prefab.Lexeme, location.Lexeme);
         }
 
+        if (Match(TokenType.IF))
+        {
+            Token obj = Consume(TokenType.IDENTIFIER, "Expected object name");
 
+            // expect "at"
+            if (tokens[current].Lexeme != "at")
+            {
+                Debug.LogError("Expected 'at' in if condition");
+                return null;
+            }
+            current++;
+
+            Token loc = Consume(TokenType.IDENTIFIER, "Expected location name");
+
+            List<ICommand> innerCommands = new List<ICommand>();
+
+            while (!Check(TokenType.END) && !IsAtEnd())
+            {
+                ICommand cmd = ParseCommand();
+                if (cmd != null)
+                    innerCommands.Add(cmd);
+            }
+
+            Consume(TokenType.END, "Expected 'end' after if block");
+
+            return new IfCommand(obj.Lexeme, loc.Lexeme, innerCommands);
+        }
 
         Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);
         Advance();

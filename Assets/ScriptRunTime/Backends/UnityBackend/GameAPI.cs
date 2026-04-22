@@ -22,7 +22,7 @@ public class GameAPI
 
     public void Move(string objectName, string direction, float value, ExecutionMode executionMode)
     {
-        Debug.Log("GameAPI Move called");
+        // Debug.Log("GameAPI Move called");
         GameObject obj = GameObject.Find(objectName);
 
         if (obj == null)
@@ -100,6 +100,19 @@ public class GameAPI
             case "z": return Vector3.forward;
             default: return Vector3.up;
         }
+    }
+
+    public bool IsAtLocation(string objectName, string locationName)
+    {
+        GameObject obj = GameObject.Find(objectName);
+        GameObject loc = GameObject.Find(locationName);
+
+        if (obj == null || loc == null)
+            return false;
+
+        float dist = Vector3.Distance(obj.transform.position, loc.transform.position);
+
+        return dist < 1.5f;
     }
 
     public void Spawn(string prefabName, string locationName)
