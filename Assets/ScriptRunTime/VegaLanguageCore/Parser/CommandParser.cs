@@ -146,7 +146,7 @@ public class CommandParser
             return new IfCommand(obj.Lexeme, loc.Lexeme, innerCommands);
         }
 
-        Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);
+        // Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);
         Advance();
         return null;
     }
