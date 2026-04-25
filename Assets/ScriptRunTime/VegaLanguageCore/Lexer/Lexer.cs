@@ -24,7 +24,8 @@ public class Lexer
     { "loop", TokenType.LOOP },
     { "spawn", TokenType.SPAWN },
     { "at", TokenType.AT },
-    { "if", TokenType.IF }
+    { "if", TokenType.IF },
+    { "destroy", TokenType.IF }
 };
 
     public Lexer(string source)
