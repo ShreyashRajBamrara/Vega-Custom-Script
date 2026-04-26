@@ -1,0 +1,6 @@
+loop
+move dbox left 1 dynamic
+move fbox right 1 dynamic
+move dbox right 1 dynamic
+move fbox left 1 dynamic
+end

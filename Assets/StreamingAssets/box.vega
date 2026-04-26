@@ -1,0 +1,6 @@
+loop
+move abox up 1.5 dynamic
+move bbox down 1 dynamic
+move abox down 1.5 dynamic
+move bbox up 1 dynamic
+end

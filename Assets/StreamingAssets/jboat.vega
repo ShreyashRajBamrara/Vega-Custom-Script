@@ -1,0 +1,6 @@
+loop
+move jboat left 2.5 dynamic
+wait 1
+move jboat right 2.5 dynamic
+wait 1
+end

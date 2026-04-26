@@ -1,5 +1,0 @@
-repeat 20
-    move enemy forward 10
-    wait 0.5
-    rotate player x 40
-end

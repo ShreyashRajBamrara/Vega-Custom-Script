@@ -1,0 +1,4 @@
+loop
+move boat left 1 dynamic
+move boat right 1 dynamic
+end

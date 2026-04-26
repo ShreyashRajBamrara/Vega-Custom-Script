@@ -35,16 +35,29 @@ public class CommandParser
 
             float v = (float)(double)value.Literal;
 
-            // Debug.Log($"Parsed MOVE: {entity.Lexeme} {direction.Lexeme} {v}");
+            // OPTIONAL mode (dynamic)
+            ExecutionMode execMode = ExecutionMode.Instant;
 
-            return new MoveCommand(entity.Lexeme, direction.Lexeme, v, ExecutionMode.Instant);
+            if (Check(TokenType.IDENTIFIER))
+            {
+                Token modeToken = Advance();
+
+                if (modeToken.Lexeme.ToLower() == "dynamic")
+                {
+                    execMode = ExecutionMode.Smooth;
+                }
+            }
+
+            Debug.Log($"Parsed MOVE: {entity.Lexeme} {direction.Lexeme} {v} Mode: {execMode}");
+
+            return new MoveCommand(entity.Lexeme, direction.Lexeme, v, execMode);
         }
 
         if (Match(TokenType.PRINT))
         {
             Token msg = Consume(TokenType.IDENTIFIER, "Expected message");
 
-            // Debug.Log($"Parsed PRINT: {msg.Lexeme}");
+            Debug.Log($"Parsed PRINT: {msg.Lexeme}");
 
             return new PrintCommand(msg.Lexeme);
         }
@@ -120,17 +133,19 @@ public class CommandParser
 
         if (Match(TokenType.IF))
         {
-            Token obj = Consume(TokenType.IDENTIFIER, "Expected object name");
+            Token objA = Consume(TokenType.IDENTIFIER, "Expected object");
 
-            // expect "at"
-            if (tokens[current].Lexeme != "at")
+            string condition = tokens[current].Lexeme;
+
+            if (condition != "at" && condition != "touches")
             {
-                Debug.LogError("Expected 'at' in if condition");
+                Debug.LogError("Expected 'at' or 'touches'");
                 return null;
             }
+
             current++;
 
-            Token loc = Consume(TokenType.IDENTIFIER, "Expected location name");
+            Token objB = Consume(TokenType.IDENTIFIER, "Expected target object");
 
             List<ICommand> innerCommands = new List<ICommand>();
 
@@ -143,7 +158,11 @@ public class CommandParser
 
             Consume(TokenType.END, "Expected 'end' after if block");
 
-            return new IfCommand(obj.Lexeme, loc.Lexeme, innerCommands);
+            return new IfCommand(objA.Lexeme, objB.Lexeme, condition, innerCommands);
+        }
+        if (Match(TokenType.ENDGAME))
+        {
+            return new EndGameCommand();
         }
 
         // Debug.LogError("Invalid expression at token: " + tokens[current].Lexeme);

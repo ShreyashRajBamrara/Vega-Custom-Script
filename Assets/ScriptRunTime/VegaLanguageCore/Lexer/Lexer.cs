@@ -25,7 +25,9 @@ public class Lexer
     { "spawn", TokenType.SPAWN },
     { "at", TokenType.AT },
     { "if", TokenType.IF },
-    { "destroy", TokenType.IF }
+    { "destroy", TokenType.DESTROY},
+    { "endgame", TokenType.ENDGAME },
+    { "all", TokenType.ALL }
 };
 
     public Lexer(string source)
@@ -58,7 +60,9 @@ public class Lexer
             case ')':
                 AddToken(TokenType.RIGHT_PAREN);
                 break;
-
+            case ',':
+                AddToken(TokenType.COMMA);
+                break;
             case '+':
                 AddToken(TokenType.PLUS);
                 break;

@@ -18,7 +18,6 @@ public class MoveCommand : ICommand
 
     public IEnumerator Execute(GameAPI api)
     {
-        api.Move(objectName, direction, value, mode);
-        yield return null;
+        yield return api.Move(objectName, direction, value, mode);
     }
 }

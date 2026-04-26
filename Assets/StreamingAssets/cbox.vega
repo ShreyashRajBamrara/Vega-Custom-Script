@@ -1,0 +1,6 @@
+loop
+move ebox down 1.5 dynamic
+move cbox up 1 dynamic
+move ebox up 1.5 dynamic
+move cbox down 1 dynamic
+end

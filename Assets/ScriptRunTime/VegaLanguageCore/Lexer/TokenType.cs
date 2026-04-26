@@ -19,5 +19,9 @@ public enum TokenType
     IF,
     SPAWN,
     AT,
+    DESTROY,
+    COMMA,
+    ENDGAME,
+    ALL,
     EOF
 }

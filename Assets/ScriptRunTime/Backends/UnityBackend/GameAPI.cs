@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameAPI
@@ -8,7 +9,7 @@ public class GameAPI
 
     public GameAPI()
     {
-        movementAPI = new MovementAPI(CoroutineRunner.Instance);
+        movementAPI = new MovementAPI();    
         rotationAPI = new RotationAPI(CoroutineRunner.Instance);
         printAPI = new PrintAPI();
     }
@@ -20,30 +21,26 @@ public class GameAPI
         }
     }
 
-    public void Move(string objectName, string direction, float value, ExecutionMode executionMode)
+    public IEnumerator Move(string objectName, string direction, float value, ExecutionMode executionMode)
     {
-        // Debug.Log("GameAPI Move called");
         GameObject obj = GameObject.Find(objectName);
 
         if (obj == null)
         {
             Debug.LogError("Object not found: " + objectName);
-            return;
+            yield break;
         }
 
         Vector3 dir = GetDirection(direction);
 
-        if (dir == Vector3.zero)
-            return;
-
         if (executionMode == ExecutionMode.Instant)
         {
-
             movementAPI.MoveInstant(obj, dir, value);
+            yield return null;
         }
         else
         {
-            movementAPI.MoveSmooth(obj, dir, value);
+            yield return movementAPI.MoveSmooth(obj, dir, value);
         }
     }
 
@@ -113,6 +110,27 @@ public class GameAPI
         float dist = Vector3.Distance(obj.transform.position, loc.transform.position);
 
         return dist < 1.5f;
+    }
+    public void EndGame()
+    {
+        Debug.Log("Game Ended");
+        Time.timeScale = 0f;
+    }
+    public bool IsTouching(string objA, string objB)
+    {
+        GameObject a = GameObject.Find(objA);
+        GameObject b = GameObject.Find(objB);
+
+        if (a == null || b == null)
+            return false;
+
+        Collider colA = a.GetComponent<Collider>();
+        Collider colB = b.GetComponent<Collider>();
+
+        if (colA == null || colB == null)
+            return false;
+
+        return colA.bounds.Intersects(colB.bounds);
     }
 
     public void Spawn(string prefabName, string locationName)
