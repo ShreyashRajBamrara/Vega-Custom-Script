@@ -1,0 +1,6 @@
+loop
+spawn rock at rockpoint
+move rockpoint right 1.5 
+spwan rock at rockpoint
+move rockpoint left 2
+end
