@@ -23,5 +23,6 @@ public enum TokenType
     COMMA,
     ENDGAME,
     ALL,
+    FIRE,
     EOF
 }
